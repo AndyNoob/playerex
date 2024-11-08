@@ -80,10 +80,9 @@ abstract class ItemStackMixin {
         }
     }
 
-    @Inject(method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), cancellable = true)
+    @Inject(method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"), cancellable = true)
     public <T extends LivingEntity> void preventBreak(int amount, T entity, Consumer<T> onBroken, CallbackInfo ci) {
         if (!PlayerEX.CONFIG.getFeatureSettings().getItemBreakingEnabled()) return;
-
         ItemStack stack = (ItemStack)(Object)this;
         if (stack.getItem().builtInRegistryHolder().is(PlayerEXTags.UNBREAKABLE_ITEMS)) {
             if (!PlayerEXUtil.isBroken(stack)) {
